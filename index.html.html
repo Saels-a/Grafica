@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elasticidad cruzada: curva de demanda interactiva</title>
+<style>
+:root{--bg:#fff;--fg:#1F2937;--mut:#6B7280;--g:#1B6B4F;--o:#B8420F;--n:#4B5563;--card:#F3F4F6;--axis:#9CA3AF;--d0:#9CA3AF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--fg:#F3F4F6;--mut:#9CA3AF;--g:#4FBF94;--o:#F08A5D;--n:#9CA3AF;--card:#1F2937;--axis:#6B7280;--d0:#6B7280;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111827;--fg:#F3F4F6;--mut:#9CA3AF;--g:#4FBF94;--o:#F08A5D;--n:#9CA3AF;--card:#1F2937;--axis:#6B7280;--d0:#6B7280;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Calibri,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.4}
+main{max-width:980px;margin:0 auto;padding:20px 16px 32px}
+h1{font-family:Cambria,Georgia,"Times New Roman",serif;font-size:clamp(24px,4vw,34px);margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 14px}
+.panel{background:var(--card);border-radius:14px;padding:14px}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--fg);font-family:Calibri,"Segoe UI",Arial,sans-serif}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+button{font:inherit;border:1.5px solid var(--axis);background:var(--bg);color:var(--fg);border-radius:999px;padding:7px 14px;cursor:pointer}
+button:hover{border-color:var(--fg)}
+button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button.go{background:var(--g);border-color:var(--g);color:#fff;font-weight:700}
+.sl{display:grid;grid-template-columns:1fr;gap:14px;margin-top:6px}
+@media(min-width:700px){.sl{grid-template-columns:1fr 1fr}}
+label{display:block;font-weight:700;margin-bottom:4px}
+input[type=range]{width:100%;accent-color:var(--fg)}
+.out{margin-top:14px;padding:14px;border-radius:14px;background:var(--card)}
+.out .k{font-family:Cambria,Georgia,serif;font-size:24px;font-weight:700}
+.out .f{font-family:Cambria,Georgia,serif;font-size:18px;margin:6px 0}
+.mut{color:var(--mut)}
+</style></head>
+<body><main>
+<h1>Elasticidad cruzada: ¿cómo se mueve la demanda?</h1>
+<p class="sub">Sube el precio del bien Y y mira qué le pasa a la curva de demanda del bien X.</p>
+
+<div class="panel">
+<svg viewBox="0 0 690 420" role="img" aria-label="Curva de demanda D0 y su desplazamiento D1">
+<defs><clipPath id="c"><rect x="60" y="30" width="530" height="330"/></clipPath>
+<marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<line x1="60" y1="30" x2="60" y2="360" stroke="var(--axis)" stroke-width="2"/>
+<line x1="60" y1="360" x2="590" y2="360" stroke="var(--axis)" stroke-width="2"/>
+<text x="66" y="24" font-size="15" font-weight="700">Precio de X</text>
+<text x="590" y="388" font-size="15" font-weight="700" text-anchor="end">Cantidad de X</text>
+<g clip-path="url(#c)">
+<line id="guide" x1="60" y1="186" x2="590" y2="186" stroke="var(--axis)" stroke-dasharray="4 5"/>
+<line x1="150" y1="60" x2="450" y2="330" stroke="var(--d0)" stroke-width="4" stroke-linecap="round"/>
+<line id="d1" x1="150" y1="60" x2="450" y2="330" stroke="var(--n)" stroke-width="5" stroke-linecap="round"/>
+<line id="arr" x1="290" y1="186" x2="290" y2="186" stroke-width="3" marker-end="url(#ah)" style="color:var(--n);stroke:var(--n)"/>
+</g>
+<line id="dropB" x1="290" y1="186" x2="290" y2="360" stroke="var(--axis)" stroke-dasharray="4 5"/>
+<circle cx="290" cy="186" r="7" fill="var(--d0)"/>
+<circle id="ptB" cx="290" cy="186" r="8" fill="var(--n)"/>
+<text x="290" y="380" font-size="14" text-anchor="middle" fill="var(--mut)" style="fill:var(--mut)">Q₀</text>
+<text id="q1" x="290" y="380" font-size="14" font-weight="700" text-anchor="middle">Q₁</text>
+<text x="132" y="52" font-size="15" font-weight="700" text-anchor="middle" style="fill:var(--mut)">D₀</text>
+<text id="l1" x="150" y="52" font-size="15" font-weight="700" text-anchor="middle">D₁</text>
+<text id="dq" x="290" y="170" font-size="16" font-weight="700" text-anchor="middle"></text>
+<rect x="628" y="60" width="26" height="300" rx="6" fill="none" stroke="var(--axis)" stroke-width="2"/>
+<rect id="pyb" x="630" y="360" width="22" height="0" rx="4" fill="var(--fg)"/>
+<text x="641" y="48" font-size="15" font-weight="700" text-anchor="middle" id="pyt">+0%</text>
+<text x="641" y="384" font-size="14" text-anchor="middle" style="fill:var(--mut)">Precio de Y</text>
+</svg>
+</div>
+
+<div class="row">
+<button class="go" id="play">▶ Subir el precio de Y</button>
+</div>
+<div class="row" id="presets" aria-label="Ejemplos"></div>
+
+<div class="sl">
+<div><label for="e">Elasticidad cruzada: <span id="ev"></span></label><input id="e" type="range" min="-5" max="5" step="0.1" value="2"></div>
+<div><label for="dp">Sube el precio de Y: <span id="dv"></span></label><input id="dp" type="range" min="0" max="10" step="1" value="10"></div>
+</div>
+
+<div class="out" aria-live="polite">
+<div class="k" id="kind"></div>
+<div class="f" id="form"></div>
+<div id="why"></div>
+<div class="mut" id="mag"></div>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const P=[['Coca-Cola y Pepsi',2],['Café y té',0.5],['Computadoras y lavadoras',0],['Hot dogs y mostaza',-0.6],['Autos y gasolina',-0.5]];
+let e=2,dp=10,cur={pct:0,py:0},tgt={pct:0,py:0},raf=0;
+const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const f1=n=>n.toFixed(1).replace('.',',');
+const sg=n=>(n>0?'+':n<0?'−':'')+f1(Math.abs(n)).replace(',0','');
+const sg1=n=>(n>0?'+':n<0?'−':'')+f1(Math.abs(n));
+function color(){return Math.abs(e)<0.05?'var(--n)':e>0?'var(--g)':'var(--o)'}
+function render(){
+  const dx=cur.pct/100*230,c=color();
+  const d1=$('d1');d1.setAttribute('transform','translate('+dx+' 0)');d1.style.stroke=c;
+  const xB=290+dx;
+  $('ptB').setAttribute('cx',xB);$('ptB').style.fill=c;
+  $('dropB').setAttribute('x1',xB);$('dropB').setAttribute('x2',xB);
+  const a=$('arr');a.setAttribute('x2',Math.abs(dx)<3?290:xB-(dx>0?9:-9));a.style.color=c;a.style.stroke=c;
+  const q=$('q1');q.setAttribute('x',Math.abs(dx)<12?290+(dx>=0?22:-22):xB);q.style.fill=c;q.textContent='Q₁';
+  const l=$('l1');l.setAttribute('x',Math.max(75,Math.min(575,150+dx)));l.style.fill=c;
+  const t=$('dq');t.setAttribute('x',290+dx/2);t.style.fill=c;t.textContent=Math.abs(cur.pct)<0.5?'':'ΔQx = '+sg1(cur.pct)+'%';
+  const h=cur.py/10*300;$('pyb').setAttribute('y',360-h);$('pyb').setAttribute('height',h);
+  $('pyt').textContent='+'+Math.round(cur.py)+'%';
+}
+function step(){raf=0;let mv=false;for(const k in cur){const d=tgt[k]-cur[k];if(red||Math.abs(d)<0.02)cur[k]=tgt[k];else{cur[k]+=d*0.08;mv=true}}render();if(mv)raf=requestAnimationFrame(step)}
+function go(replay){
+  if(replay){cur.pct=0;cur.py=0}
+  tgt.py=dp;tgt.pct=e*dp;if(!raf)raf=requestAnimationFrame(step);
+}
+function text(){
+  const z=Math.abs(e)<0.05,c=color();
+  const k=z?['Independientes','No hay relación: el precio de Y no mueve la demanda de X.']:e>0?['Sustitutos','Sube Y, la gente compra más X: la demanda se desplaza a la derecha.']:['Complementarios','Sube Y, la gente compra menos X: la demanda se desplaza a la izquierda.'];
+  $('kind').textContent=k[0]+' (e '+(z?'= 0':e>0?'> 0':'< 0')+')';$('kind').style.color=c;
+  $('form').textContent='%ΔQx = e × %ΔPy = '+sg1(e)+' × '+dp+'% = '+sg1(e*dp)+'%';
+  $('why').textContent=k[1];
+  const a=Math.abs(e);
+  $('mag').textContent='Magnitud: '+(z?'sin relación':a>1.05?'|e| > 1, elástica: la relación es fuerte, Qx cambia más que Py.':a>=0.95?'|e| = 1, unitaria: Qx cambia lo mismo que Py.':'|e| < 1, inelástica: la relación es débil, Qx cambia menos que Py.');
+  $('ev').textContent=sg1(e);$('dv').textContent='+'+dp+'%';
+  document.querySelectorAll('#presets button').forEach((b,i)=>b.classList.toggle('on',P[i][1]===e));
+}
+P.forEach(([n,v],i)=>{const b=document.createElement('button');b.textContent=n+' ('+sg(v)+')';b.onclick=()=>{e=v;$('e').value=v;text();go(true)};$('presets').appendChild(b)});
+$('e').oninput=ev=>{e=+ev.target.value;text();go(false)};
+$('dp').oninput=ev=>{dp=+ev.target.value;text();go(false)};
+$('play').onclick=()=>go(true);
+text();render();setTimeout(()=>go(true),500);
+</script></body></html>
